@@ -79,6 +79,7 @@ auth required pam_google_authenticator.so" | tee -a /etc/pam.d/cockpit
 prompt "Install Reverse Proxy"
 firewall-cmd --permanent --zone=public --add-forward-port=port=80:proto=tcp:toport=8001
 firewall-cmd --permanent --zone=public --add-forward-port=port=443:proto=tcp:toport=4001
+firewall-cmd --permanent --zone=public --change-interface=eth0
 sudo firewall-cmd --reload
 sudo -iu admin mkdir -p /home/admin/apps/01_reverse-proxy/caddy/Caddyfiles/
 sudo -iu admin mkdir /home/admin/apps/01_reverse-proxy/caddy/data/
