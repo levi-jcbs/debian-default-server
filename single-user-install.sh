@@ -61,6 +61,7 @@ sudo -iu admin mkdir -p /home/admin/apps/
 prompt "Install Podman"
 apt -y install podman slirp4netns uidmap containers-storage catatonit
 sed -i 's/^\(# \)\?unqualified-search-registries =.*/unqualified-search-registries = \["docker.io", "ghcr.io"\]/' /etc/containers/registries.conf
+systemctl --user -M admin@ enable podman.socket
 
 prompt "Install Cockpit"
 apt -y install cockpit cockpit-networkmanager cockpit-packagekit cockpit-pcp cockpit-podman cockpit-storaged libpam-google-authenticator
