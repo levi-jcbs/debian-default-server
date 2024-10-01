@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Function
 function prompt() {
 	echo -e "\n\033[1m$1\033[0m"
