@@ -48,6 +48,17 @@ sed -i 's/^\(#\)\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i 's/^\(#\)\?AcceptEnv.*/#AcceptEnv LANG LC_*/' /etc/ssh/sshd_config
 systemctl restart sshd.service
 
+prompt "Add Swap"
+if free | awk '/^Swap:/ {exit !$2}'; then
+	echo "Swap found. Skipping..."
+else
+	fallocate -l 8G /swapfile
+	chmod 600 /swapfile
+	mkswap /swapfile
+	swapon /swapfile
+	echo "/swapfile swap swap defaults 0 0" | tee -a /etc/fstab
+fi
+
 prompt "Create User"
 useradd -m -s /bin/bash admin
 sudo -iu admin mkdir /home/admin/.ssh/
