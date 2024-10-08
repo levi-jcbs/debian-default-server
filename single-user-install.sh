@@ -98,7 +98,7 @@ sudo -iu admin mkdir /home/admin/apps/01_reverse-proxy/caddy/data/
 sudo -iu admin mkdir /home/admin/apps/01_reverse-proxy/caddy/config/
 echo "{
     http_port 8001
-	https_port 4001
+    https_port 4001
 }
 
 $domain_cockpit {
