@@ -89,11 +89,13 @@ echo "
 auth required pam_google_authenticator.so" | tee -a /etc/pam.d/cockpit
 
 prompt "Install Reverse Proxy"
-firewall-cmd --permanent --zone=public --add-forward-port=port=80:proto=tcp:toport=8001
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" forward-port port="80" protocol="tcp" to-port="8001"'
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv6" forward-port port="80" protocol="tcp" to-port="8001"'
 firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -o lo -p tcp --dport 80 -j REDIRECT --to-port 8001
 firewall-cmd --permanent --direct --add-rule ipv6 nat OUTPUT 0 -o lo -p tcp --dport 80 -j REDIRECT --to-port 8001
 
-firewall-cmd --permanent --zone=public --add-forward-port=port=443:proto=tcp:toport=4001
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv4" forward-port port="443" protocol="tcp" to-port="4001"'
+firewall-cmd --permanent --zone=public --add-rich-rule='rule family="ipv6" forward-port port="443" protocol="tcp" to-port="4001"'
 firewall-cmd --permanent --direct --add-rule ipv4 nat OUTPUT 0 -o lo -p tcp --dport 443 -j REDIRECT --to-port 4001
 firewall-cmd --permanent --direct --add-rule ipv6 nat OUTPUT 0 -o lo -p tcp --dport 443 -j REDIRECT --to-port 4001
 firewall-cmd --permanent --zone=public --change-interface=eth0
